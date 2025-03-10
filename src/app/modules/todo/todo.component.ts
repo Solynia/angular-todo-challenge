@@ -12,7 +12,8 @@ import { EditTodoDialogComponent } from './components/edit-todo-dialog/edit-todo
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
-  styleUrls: ['./todo.component.css']
+  styleUrls: ['./todo.component.css'],
+  standalone: false
 })
 export class TodoComponent implements OnInit {
   statusEnum = TodoStatus;
