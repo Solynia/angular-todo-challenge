@@ -1,19 +1,36 @@
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { filter, Observable, take } from 'rxjs';
-import { getTodos, addTodo, removeTodo, changeTodoStatus, changeTodoName } from '../store/todo/todo.actions';
-import { select, Store } from '@ngrx/store';
-import { getAllTodos } from '../store/todo/todo.selectors';
-import { TodoStatus, Todo } from '../store/todo/todo.reducer';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButton, MatMiniFabButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { EditTodoDialogComponent } from './components/edit-todo-dialog/edit-todo-dialog.component';
-
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { todoActions } from '../store/todo/todo.actions';
+import { Todo, TodoStatus } from '../store/todo/todo.reducer';
+import { getAllTodos } from '../store/todo/todo.selectors';
 
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.css'],
-  standalone: false
+  imports: [
+    MatFormField,
+    MatLabel,
+    MatInput,
+    ReactiveFormsModule,
+    MatButton,
+    MatTabGroup,
+    MatTab,
+    NgFor,
+    MatMiniFabButton,
+    MatIcon,
+    NgIf,
+    AsyncPipe,
+  ],
 })
 export class TodoComponent implements OnInit {
   statusEnum = TodoStatus;
@@ -22,29 +39,26 @@ export class TodoComponent implements OnInit {
 
   allTodos$: Observable<Todo[]> = this.store.pipe(select(getAllTodos));
 
-  constructor(
-    private store: Store,
-    public dialog: MatDialog
-  ) { }
+  constructor(private store: Store, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.store.dispatch(getTodos());
+    this.store.dispatch(todoActions.getToDoList());
   }
-  
+
   addNewTodo() {
     if (!this.newTodo.value) return;
-    this.store.dispatch(addTodo({ name: this.newTodo.value }))
+    this.store.dispatch(todoActions.addToDoItem({ name: this.newTodo.value }));
   }
 
   changeTodoName(todo: Todo) {
-    this.store.dispatch(changeTodoName({ todo }))
+    this.store.dispatch(todoActions.changeToDoName({ todo }));
   }
 
   changeTodoStatus(todo: Todo) {
-    this.store.dispatch(changeTodoStatus({ todo }))
+    this.store.dispatch(todoActions.changeToDoStatus({ todo }));
   }
 
   removeTodo(todo: Todo) {
-    this.store.dispatch(removeTodo({ todo }))
+    this.store.dispatch(todoActions.removeToDoItem({ todo }));
   }
 }

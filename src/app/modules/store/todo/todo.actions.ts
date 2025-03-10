@@ -1,30 +1,15 @@
-import { createAction, props } from '@ngrx/store';
-import { createFailureAction, createSuccessAction } from '../action-utils';
-import { Todo } from './todo.reducer'
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
+import { Todo, TODO_FEATURE_KEY } from './todo.reducer';
 
-export const getTodos = createAction('[ToDo] Get ToDo List');
-export const getTodosSuccess = createSuccessAction(
-  getTodos,
-  props<{ todoList: Todo[]}>()
-);
-export const getTodosFailure = createFailureAction(getTodos);
-
-export const addTodo = createAction(
-  '[ToDo] Add ToDo Item',
-  props<{ name: string}>()
-  );
-
-export const changeTodoName = createAction(
-  '[ToDo] Change ToDo Name',
-  props<{ todo: Todo}>()
-  );
-
-export const changeTodoStatus = createAction(
-  '[ToDo] Change ToDo Status',
-  props<{ todo: Todo}>()
-  );
-
-export const removeTodo = createAction(
-  '[ToDo] Remove ToDo Item',
-  props<{ todo: Todo}>()
-  );
+export const todoActions = createActionGroup({
+  source: TODO_FEATURE_KEY,
+  events: {
+    'Get ToDo List': emptyProps(),
+    'Get ToDo List Success': props<{ todoList: Todo[] }>(),
+    'Get ToDo List Failure': props<{ error: any }>(),
+    'Add ToDo Item': props<{ name: string }>(),
+    'Change ToDo Name': props<{ todo: Todo }>(),
+    'Change ToDo Status': props<{ todo: Todo }>(),
+    'Remove ToDo Item': props<{ todo: Todo }>(),
+  },
+});

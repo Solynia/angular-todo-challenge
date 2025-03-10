@@ -1,7 +1,7 @@
-import { Action, createReducer, on } from '@ngrx/store';
-import * as actions from './todo.actions';
+import { createFeature, createReducer, on } from '@ngrx/store';
+import { todoActions } from './todo.actions';
 
-export const TODO_FEATURE_KEY = 'todo-store';
+export const TODO_FEATURE_KEY = 'ToDo';
 
 export enum TodoStatus {
   Complete = 'COMPLETE',
@@ -15,25 +15,28 @@ export interface Todo {
 }
 
 export interface TodoState {
-    todoList: Todo[];
+  todoList: Todo[];
 }
 
 export const initialState: TodoState = {
-  todoList: []
-}
+  todoList: [],
+};
 
 const todoReducer = createReducer(
-    initialState,
-    on(actions.getTodosSuccess, (state, { todoList }) => ({
-      ...state,
-      todoList,
-    })),
-    on(actions.changeTodoName, (state, { todo }) => ({
-      ...state,
-      todoList: state.todoList.map(el => (el.id === todo.id) ? {...el, name: todo.name} : el)
-    })),
+  initialState,
+  on(todoActions.getToDoListSuccess, (state, { todoList }) => ({
+    ...state,
+    todoList,
+  })),
+  on(todoActions.changeToDoName, (state, { todo }) => ({
+    ...state,
+    todoList: state.todoList.map((el) =>
+      el.id === todo.id ? { ...el, name: todo.name } : el
+    ),
+  }))
 );
 
-export function reducer(state: TodoState | undefined, action: Action) {
-    return todoReducer(state, action);
-}
+export const todoFeature = createFeature({
+  name: TODO_FEATURE_KEY,
+  reducer: todoReducer,
+});
