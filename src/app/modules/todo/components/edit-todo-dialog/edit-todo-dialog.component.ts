@@ -13,7 +13,7 @@ import { MatInput } from '@angular/material/input';
     imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatInput, FormsModule, MatDialogActions, MatButton, MatDialogClose]
 })
 export class EditTodoDialogComponent implements OnInit {
-  dialogRef = inject<MatDialogRef<EditTodoDialogComponent>>(MatDialogRef);
+  private readonly dialogRef = inject<MatDialogRef<EditTodoDialogComponent>>(MatDialogRef);
 
   newName = '';
 

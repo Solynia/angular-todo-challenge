@@ -22,7 +22,7 @@ const todos: Todo[] = [
 export class TodoEffects {
   private readonly actions$ = inject(Actions);
 
-  getToDoList$ = createEffect(() =>
+  readonly getToDoList$ = createEffect(() =>
     this.actions$.pipe(
       ofType(todoActions.getToDoList),
       switchMap((_action) =>

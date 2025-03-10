@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton, MatMiniFabButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,7 +8,6 @@ import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { todoActions } from '../store/todo/todo.actions';
 import { Todo, TodoStatus } from '../store/todo/todo.reducer';
 import { getAllTodos } from '../store/todo/todo.selectors';
@@ -27,18 +26,18 @@ import { getAllTodos } from '../store/todo/todo.selectors';
     MatTab,
     MatMiniFabButton,
     MatIcon,
-    AsyncPipe
-],
+    AsyncPipe,
+  ],
 })
 export class TodoComponent implements OnInit {
-  private store = inject(Store);
-  dialog = inject(MatDialog);
+  private readonly store = inject(Store);
+  private readonly dialog = inject(MatDialog);
 
-  statusEnum = TodoStatus;
+  readonly statusEnum = TodoStatus;
 
-  newTodo = new FormControl('', [Validators.required]);
+  readonly newTodo = new FormControl<string>('', [Validators.required]);
 
-  allTodos$: Observable<Todo[]> = this.store.pipe(select(getAllTodos));
+  readonly allTodos$ = this.store.pipe(select(getAllTodos));
 
   ngOnInit(): void {
     this.store.dispatch(todoActions.getToDoList());
