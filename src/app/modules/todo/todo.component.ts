@@ -1,4 +1,4 @@
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton, MatMiniFabButton } from '@angular/material/button';
@@ -25,12 +25,10 @@ import { getAllTodos } from '../store/todo/todo.selectors';
     MatButton,
     MatTabGroup,
     MatTab,
-    NgFor,
     MatMiniFabButton,
     MatIcon,
-    NgIf,
-    AsyncPipe,
-  ],
+    AsyncPipe
+],
 })
 export class TodoComponent implements OnInit {
   statusEnum = TodoStatus;
