@@ -1,7 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { todoActions } from './todo.actions';
-
-export const TODO_FEATURE_KEY = 'ToDo';
+import { TODO_FEATURE_KEY, todoActions } from './todo.actions';
 
 export enum TodoStatus {
   Complete = 'COMPLETE',

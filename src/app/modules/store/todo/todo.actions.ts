@@ -1,5 +1,7 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Todo, TODO_FEATURE_KEY } from './todo.reducer';
+import { Todo } from './todo.reducer';
+
+export const TODO_FEATURE_KEY = 'ToDo';
 
 export const todoActions = createActionGroup({
   source: TODO_FEATURE_KEY,
