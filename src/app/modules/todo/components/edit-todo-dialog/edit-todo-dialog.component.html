@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Edit ToDo</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>New ToDo name</mat-label>
+    <input matInput [(ngModel)]="newName">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button [disabled]="!newName" [mat-dialog-close]="newName" cdkFocusInitial>Ok</button>
+</div>

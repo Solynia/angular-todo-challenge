@@ -1,0 +1,36 @@
+.container {
+  max-width: 500px;
+  margin: 50px auto;
+}
+
+.todo-list-form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+  justify-content: space-around;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
+.todo-actions button {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.todo-list-form .mat-form-field {
+ width: 300px;
+ margin-right: 20px;
+}
+
+ .todo-list-form .mat-raised-button {
+  margin-left: 10px;
+ }
+
+ .line-through {
+  text-decoration: line-through;
+ }
