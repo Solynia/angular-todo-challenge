@@ -1,66 +1,65 @@
-<div class="container">
-  <div class="todo-list-form">
-    <mat-form-field>
-      <mat-label>Todo List Item</mat-label>
-      <input matInput placeholder="E.g. Send Email" [formControl]="newTodo">
-    </mat-form-field>
-    <button mat-raised-button color="primary" [disabled]="newTodo.invalid" (click)="addNewTodo()">Add Todo</button>
-  </div>
+@if ( { allTodos: allTodos$ | async}; as vm ) {
+  <div class="container">
+    <div class="todo-list-form">
+      <mat-form-field>
+        <mat-label>Todo List Item</mat-label>
+        <input matInput placeholder="E.g. Send Email" [formControl]="newTodo">
+      </mat-form-field>
+      <button mat-raised-button color="primary" [disabled]="newTodo.invalid" (click)="addNewTodo()">Add Todo</button>
+    </div>
 
-  <mat-tab-group>
-    <mat-tab label="All">
-      @for (todo of allTodos$ | async; track todo) {
-        <div class="todo-item">
-          <span>{{ todo.name }}</span>
-          <div class="todo-actions">
-            <button mat-mini-fab color="primary" aria-label="Complete" (click)="changeTodoStatus(todo)">
-              <mat-icon>done</mat-icon>
-            </button>
-            <button mat-mini-fab color="warn" aria-label="Delete" (click)="removeTodo(todo)">
-              <mat-icon>delete</mat-icon>
-            </button>
+    <mat-tab-group>
+      <mat-tab label="All">
+        @for (todo of vm.allTodos; track todo) {
+          <div class="todo-item">
+            <span>{{ todo.name }}</span>
+            <div class="todo-actions">
+              <button mat-mini-fab color="primary" aria-label="Complete" (click)="changeTodoStatus(todo)">
+                <mat-icon>done</mat-icon>
+              </button>
+              <button mat-mini-fab color="warn" aria-label="Delete" (click)="removeTodo(todo)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
           </div>
-        </div>
-      }
-      @if ((allTodos$ | async)?.length === 0) {
-        <p class="todo-item">No todos</p>
-      }
-    </mat-tab>
-    <mat-tab label="In Progress">
-      @for (todo of allTodos$ | async; track todo) {
-        <div class="todo-item">
-          <span>{{ todo.name }}</span>
-          <div class="todo-actions">
-            <button mat-mini-fab color="primary" aria-label="Complete" (click)="changeTodoStatus(todo)">
-              <mat-icon>done</mat-icon>
-            </button>
-            <button mat-mini-fab color="warn" aria-label="Delete" (click)="removeTodo(todo)">
-              <mat-icon>delete</mat-icon>
-            </button>
+        } @empty {
+          <p class="todo-item">No todos</p>
+        }
+      </mat-tab>
+      <mat-tab label="In Progress">
+        @for (todo of vm.allTodos; track todo) {
+          <div class="todo-item">
+            <span>{{ todo.name }}</span>
+            <div class="todo-actions">
+              <button mat-mini-fab color="primary" aria-label="Complete" (click)="changeTodoStatus(todo)">
+                <mat-icon>done</mat-icon>
+              </button>
+              <button mat-mini-fab color="warn" aria-label="Delete" (click)="removeTodo(todo)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
           </div>
-        </div>
-      }
-      @if ((allTodos$ | async)?.length === 0) {
-        <p class="todo-item">No todos in progress</p>
-      }
-    </mat-tab>
-    <mat-tab label="Completed">
-      @for (todo of allTodos$ | async; track todo) {
-        <div class="todo-item">
-          <span class="line-through">{{ todo.name }}</span>
-          <div class="todo-actions">
-            <button mat-mini-fab color="primary" aria-label="Complete" (click)="changeTodoStatus(todo)">
-              <mat-icon>done</mat-icon>
-            </button>
-            <button mat-mini-fab color="warn" aria-label="Delete" (click)="removeTodo(todo)">
-              <mat-icon>delete</mat-icon>
-            </button>
+        } @empty {
+          <p class="todo-item">No todos in progress</p>
+        }
+      </mat-tab>
+      <mat-tab label="Completed">
+        @for (todo of vm.allTodos; track todo) {
+          <div class="todo-item">
+            <span class="line-through">{{ todo.name }}</span>
+            <div class="todo-actions">
+              <button mat-mini-fab color="primary" aria-label="Complete" (click)="changeTodoStatus(todo)">
+                <mat-icon>done</mat-icon>
+              </button>
+              <button mat-mini-fab color="warn" aria-label="Delete" (click)="removeTodo(todo)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
           </div>
-        </div>
-      }
-      @if ((allTodos$ | async)?.length === 0) {
-        <p class="todo-item">No completed todos</p>
-      }
-    </mat-tab>
-  </mat-tab-group>
-</div>
+        } @empty {
+          <p class="todo-item">No completed todos</p>
+        }
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+}
