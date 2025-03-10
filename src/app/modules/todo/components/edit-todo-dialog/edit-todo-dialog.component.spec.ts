@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatDialogRef } from '@angular/material/dialog';
 import { EditTodoDialogComponent } from './edit-todo-dialog.component';
 
 describe('EditTodoDialogComponent', () => {
@@ -8,9 +8,9 @@ describe('EditTodoDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [EditTodoDialogComponent]
-})
-    .compileComponents();
+      imports: [EditTodoDialogComponent],
+      providers: [{ provide: MatDialogRef, useValue: {} }],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EditTodoDialogComponent);
     component = fixture.componentInstance;

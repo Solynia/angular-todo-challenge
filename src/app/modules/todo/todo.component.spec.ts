@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideMockStore } from '@ngrx/store/testing';
 import { TodoComponent } from './todo.component';
 
 describe('TodoComponent', () => {
@@ -8,9 +8,9 @@ describe('TodoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [TodoComponent]
-})
-    .compileComponents();
+      imports: [TodoComponent],
+      providers: [provideMockStore({ initialState: {} })],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TodoComponent);
     component = fixture.componentInstance;
