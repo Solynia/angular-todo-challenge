@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton, MatMiniFabButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -31,13 +31,14 @@ import { getAllTodos } from '../store/todo/todo.selectors';
 ],
 })
 export class TodoComponent implements OnInit {
+  private store = inject(Store);
+  dialog = inject(MatDialog);
+
   statusEnum = TodoStatus;
 
   newTodo = new FormControl('', [Validators.required]);
 
   allTodos$: Observable<Todo[]> = this.store.pipe(select(getAllTodos));
-
-  constructor(private store: Store, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.store.dispatch(todoActions.getToDoList());

@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { todoActions } from './todo.actions';
@@ -21,6 +20,8 @@ const todos: Todo[] = [
 
 @Injectable()
 export class TodoEffects {
+  private readonly actions$ = inject(Actions);
+
   getToDoList$ = createEffect(() =>
     this.actions$.pipe(
       ofType(todoActions.getToDoList),
@@ -32,9 +33,4 @@ export class TodoEffects {
       )
     )
   );
-
-  constructor(
-    private readonly actions$: Actions,
-    private readonly store: Store
-  ) {}
 }
