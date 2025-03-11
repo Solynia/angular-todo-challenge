@@ -1,0 +1,15 @@
+@for (todo of todos(); track todo) {
+  <div class="todo-item">
+    <span>{{ todo.name }}</span>
+    <div class="todo-actions">
+      <button mat-mini-fab color="primary" aria-label="Complete" (click)="completeClicked.emit(todo)">
+        <mat-icon>done</mat-icon>
+      </button>
+      <button mat-mini-fab color="warn" aria-label="Delete" (click)="deleteClicked.emit(todo)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+} @empty {
+  <p class="todo-item">{{ emptyPlaceholder() }}</p>
+}

@@ -1,16 +1,16 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButton, MatMiniFabButton } from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { select, Store } from '@ngrx/store';
 import { todoActions } from '../store/todo/todo.actions';
 import { Todo, TodoStatus } from '../store/todo/todo.reducer';
 import { getAllTodos } from '../store/todo/todo.selectors';
+import { EditTodoListComponent } from './components/edit-todo-list/edit-todo-list.component';
 
 @Component({
   selector: 'app-todo',
@@ -24,9 +24,8 @@ import { getAllTodos } from '../store/todo/todo.selectors';
     MatButton,
     MatTabGroup,
     MatTab,
-    MatMiniFabButton,
-    MatIcon,
     AsyncPipe,
+    EditTodoListComponent,
   ],
 })
 export class TodoComponent implements OnInit {

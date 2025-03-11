@@ -10,55 +10,13 @@
 
     <mat-tab-group>
       <mat-tab label="All">
-        @for (todo of vm.allTodos; track todo) {
-          <div class="todo-item">
-            <span>{{ todo.name }}</span>
-            <div class="todo-actions">
-              <button mat-mini-fab color="primary" aria-label="Complete" (click)="changeTodoStatus(todo)">
-                <mat-icon>done</mat-icon>
-              </button>
-              <button mat-mini-fab color="warn" aria-label="Delete" (click)="removeTodo(todo)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </div>
-        } @empty {
-          <p class="todo-item">No todos</p>
-        }
+        <app-edit-todo-list [todos]="vm.allTodos" emptyPlaceholder="No todos" (completeClicked)="changeTodoStatus($event)" (deleteClicked)="removeTodo($event)"/>
       </mat-tab>
       <mat-tab label="In Progress">
-        @for (todo of vm.allTodos; track todo) {
-          <div class="todo-item">
-            <span>{{ todo.name }}</span>
-            <div class="todo-actions">
-              <button mat-mini-fab color="primary" aria-label="Complete" (click)="changeTodoStatus(todo)">
-                <mat-icon>done</mat-icon>
-              </button>
-              <button mat-mini-fab color="warn" aria-label="Delete" (click)="removeTodo(todo)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </div>
-        } @empty {
-          <p class="todo-item">No todos in progress</p>
-        }
+        <app-edit-todo-list [todos]="vm.allTodos" emptyPlaceholder="No todos in progress" (completeClicked)="changeTodoStatus($event)" (deleteClicked)="removeTodo($event)"/>
       </mat-tab>
       <mat-tab label="Completed">
-        @for (todo of vm.allTodos; track todo) {
-          <div class="todo-item">
-            <span class="line-through">{{ todo.name }}</span>
-            <div class="todo-actions">
-              <button mat-mini-fab color="primary" aria-label="Complete" (click)="changeTodoStatus(todo)">
-                <mat-icon>done</mat-icon>
-              </button>
-              <button mat-mini-fab color="warn" aria-label="Delete" (click)="removeTodo(todo)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </div>
-        } @empty {
-          <p class="todo-item">No completed todos</p>
-        }
+        <app-edit-todo-list [todos]="vm.allTodos" emptyPlaceholder="No completed todos" (completeClicked)="changeTodoStatus($event)" (deleteClicked)="removeTodo($event)"/>
       </mat-tab>
     </mat-tab-group>
   </div>
