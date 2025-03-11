@@ -12,10 +12,10 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
-import { Store } from '@ngrx/store';
+import { createSelector, Store } from '@ngrx/store';
 import { todoActions } from '../store/todo/todo.actions';
 import { Todo, TodoPriority, TodoStatus } from '../store/todo/todo.reducer';
-import { getFilteredTodos } from '../store/todo/todo.selectors';
+import { getFilteredTodos, getTodoCounts } from '../store/todo/todo.selectors';
 import { EditTodoListComponent } from './components/edit-todo-list/edit-todo-list.component';
 
 const indexToStatusConverter: Record<number, TodoStatus | undefined> = {
@@ -24,11 +24,19 @@ const indexToStatusConverter: Record<number, TodoStatus | undefined> = {
   2: TodoStatus.Complete,
 };
 
-const prepareListLabels = () => [
-  { label: 'All', emptyPlaceholder: 'No todos' },
-  { label: 'In Progress', emptyPlaceholder: 'No todos in progress' },
-  { label: 'Completed', emptyPlaceholder: 'No completed todos' },
-];
+const getLists = createSelector(getTodoCounts, (counts) => {
+  return [
+    { label: `All Todos (${counts.total})`, emptyPlaceholder: 'No todos' },
+    {
+      label: `In Progress (${counts.IN_PROGRESS})`,
+      emptyPlaceholder: 'No todos in progress',
+    },
+    {
+      label: `Completed (${counts.COMPLETE})`,
+      emptyPlaceholder: 'No completed todos',
+    },
+  ];
+});
 
 @Component({
   selector: 'app-todo',
@@ -65,7 +73,7 @@ export class TodoComponent implements OnInit {
   });
   readonly todos$ = this.store.select(getFilteredTodos);
   priorities = Object.values(TodoPriority);
-  readonly lists = prepareListLabels();
+  readonly lists$ = this.store.select(getLists);
 
   ngOnInit(): void {
     this.store.dispatch(todoActions.getToDoList());
