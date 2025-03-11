@@ -58,9 +58,7 @@ describe('EditTodoListComponent', () => {
     componentRef.setInput('todos', todos);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    const button = compiled.querySelector<HTMLButtonElement>(
-      '.todo-item > .todo-actions > button:nth-child(1)'
-    )!;
+    const button = compiled.querySelector<HTMLButtonElement>('#completeBtn')!;
 
     button.click();
 
@@ -73,9 +71,7 @@ describe('EditTodoListComponent', () => {
     componentRef.setInput('todos', todos);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    const button = compiled.querySelector<HTMLButtonElement>(
-      '.todo-item > .todo-actions > button:nth-child(2)'
-    )!;
+    const button = compiled.querySelector<HTMLButtonElement>('#deleteBtn')!;
 
     button.click();
 
@@ -88,7 +84,9 @@ describe('EditTodoListComponent', () => {
     componentRef.setInput('todos', todos);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    const div = compiled.querySelector<HTMLDivElement>('.todo-item')!;
+    const div = compiled.querySelector<HTMLDivElement>(
+      '.todo-item:nth-child(1)'
+    )!;
 
     div.click();
 

@@ -1,15 +1,8 @@
 .todo-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 1rem 0;
+  margin: 1rem 0 !important;
 }
 
 .todo-actions button {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
 }
-
- .line-through {
-   text-decoration: line-through;
- }

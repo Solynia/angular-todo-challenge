@@ -1,15 +1,25 @@
-@for (todo of todos(); track todo) {
-  <div class="todo-item" (click)="editClicked.emit(todo)">
-    <span>{{ todo.name }}</span>
-    <div class="todo-actions">
-      <button mat-mini-fab color="primary" aria-label="Complete" (click)="completeClicked.emit(todo)">
-        <mat-icon>done</mat-icon>
-      </button>
-      <button mat-mini-fab color="warn" aria-label="Delete" (click)="deleteClicked.emit(todo)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
-  </div>
-} @empty {
-  <p class="todo-item">{{ emptyPlaceholder() }}</p>
-}
+<mat-card appearance="outlined">
+  <mat-card-content>
+    @for (todo of todos(); track todo; let isFirst = $first) {
+      @if (isFirst === false) {
+        <mat-divider />
+      }
+      <div class="todo-item grid grid-cols-6 items-center" (click)="editClicked.emit(todo)">
+        <div class="todo-actions">
+          <button mat-mini-fab id="completeBtn" [color]="todo.status === statusEnum.Complete ? 'primary' : ''" aria-label="Complete" (click)="completeClicked.emit(todo)">
+            <mat-icon>done</mat-icon>
+          </button>
+        </div>
+        <span class="col-span-3" [class.line-through]="todo.status === statusEnum.Complete" [class.text-gray-400]="todo.status === statusEnum.Complete">{{ todo.name }}</span>
+        <mat-chip highlighted [color]="priorityToColor[todo.priority!]">{{todo.priority | titlecase}}</mat-chip>
+        <div class="todo-actions">
+          <button id="deleteBtn" mat-mini-fab color="warn" aria-label="Delete" (click)="deleteClicked.emit(todo)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    } @empty {
+      <p class="todo-item">{{ emptyPlaceholder() }}</p>
+    }
+  </mat-card-content>
+</mat-card>
