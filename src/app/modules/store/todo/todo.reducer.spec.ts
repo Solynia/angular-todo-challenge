@@ -98,7 +98,7 @@ describe('TodoReducer', () => {
 
       const state = todoFeature.reducer(previousState, action);
 
-      expect(state.todoList[0].id).toEqual(1);
+      expect(state.todoList[0].id).toEqual(todo.id);
       expect(state.todoList[0].status).toEqual(TodoStatus.Complete);
       expect(state.todoList).not.toBe(previousState.todoList);
     });
@@ -117,7 +117,7 @@ describe('TodoReducer', () => {
 
       const state = todoFeature.reducer(previousState, action);
 
-      expect(state.todoList[0].id).toEqual(1);
+      expect(state.todoList[0].id).toEqual(todo.id);
       expect(state.todoList[0].status).toEqual(TodoStatus.InProgress);
       expect(state.todoList).not.toBe(previousState.todoList);
     });
@@ -143,7 +143,7 @@ describe('TodoReducer', () => {
       const state = todoFeature.reducer(previousState, action);
 
       expect(state.todoList.length).toEqual(1);
-      expect(state.todoList[0].id).toEqual(2);
+      expect(state.todoList[0].id).toEqual(todo2.id);
       expect(state.todoList).not.toBe(previousState.todoList);
     });
 
@@ -166,7 +166,7 @@ describe('TodoReducer', () => {
       const state = todoFeature.reducer(previousState, action);
 
       expect(state.todoList.length).toEqual(1);
-      expect(state.todoList[0].id).toEqual(1);
+      expect(state.todoList[0].id).toEqual(realTodo.id);
       expect(state.todoList).toEqual(previousState.todoList);
     });
   });
