@@ -38,7 +38,9 @@ export const openEditToDoDialog$ = createEffect(
           .afterClosed()
           .pipe(
             filter((result) => !!result),
-            map((newTodo) => todoActions.changeToDoName({ todo: newTodo }))
+            map((newTodo) =>
+              todoActions.changeToDoNameAndPriority({ todo: newTodo })
+            )
           )
       )
     ),

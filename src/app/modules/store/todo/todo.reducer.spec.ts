@@ -222,26 +222,29 @@ describe('TodoReducer', () => {
     });
   });
 
-  describe('changeToDoName action', () => {
+  describe('changeToDoNameAndPriority action', () => {
     it('should change name and update the state in an immutable way', () => {
       const todo = {
         id: 1,
         name: 'My first todo',
         status: TodoStatus.InProgress,
+        priority: TodoPriority.medium,
       };
       const previousState: TodoState = {
         ...initialState,
         todoList: [todo],
       };
       const newName = `${todo} - edited`;
-      const action = todoActions.changeToDoName({
-        todo: { ...todo, name: newName },
+      const newPriority = TodoPriority.high;
+      const action = todoActions.changeToDoNameAndPriority({
+        todo: { ...todo, name: newName, priority: newPriority },
       });
 
       const state = todoFeature.reducer(previousState, action);
 
       expect(state.todoList[0].id).toEqual(todo.id);
       expect(state.todoList[0].name).toEqual(newName);
+      expect(state.todoList[0].priority).toEqual(newPriority);
       expect(state.todoList).not.toBe(previousState.todoList);
     });
   });

@@ -66,10 +66,12 @@ const todoReducer = createReducer(
       el.id === todo.id ? { ...el, status: todoStatusToggler[el.status] } : el
     ),
   })),
-  on(todoActions.changeToDoName, (state, { todo }) => ({
+  on(todoActions.changeToDoNameAndPriority, (state, { todo }) => ({
     ...state,
     todoList: state.todoList.map((el) =>
-      el.id === todo.id ? { ...el, name: todo.name } : el
+      el.id === todo.id
+        ? { ...el, name: todo.name, priority: todo.priority }
+        : el
     ),
   })),
   on(todoActions.removeToDoItem, (state, { todo }) => ({
