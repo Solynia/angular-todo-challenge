@@ -1,9 +1,15 @@
 import { createSelector } from '@ngrx/store';
-import { todoFeature, TodoPriority, TodoStatus } from './todo.reducer';
+import {
+  PAGE_SIZE,
+  todoFeature,
+  TodoPriority,
+  TodoStatus,
+} from './todo.reducer';
 
 export const {
   selectTodoList: getAllTodos,
   selectStatusFilter: getStatusFilter,
+  selectPageIndex: getPageIndex,
 } = todoFeature;
 
 const priorityConverter = {
@@ -29,6 +35,20 @@ export const getFilteredTodos = createSelector(
       return todos;
     }
     return todos.filter((todo) => todo.status === statusFilter);
+  }
+);
+
+export const getPaginatedTodos = createSelector(
+  getFilteredTodos,
+  getPageIndex,
+  (todos, pageIndex) => {
+    const startIndex = pageIndex * PAGE_SIZE;
+    const endIndex = Math.min(startIndex + PAGE_SIZE, todos.length);
+    return {
+      pageIndex,
+      pageSize: PAGE_SIZE,
+      items: todos.slice(startIndex, endIndex),
+    };
   }
 );
 

@@ -3,6 +3,8 @@ import {
   getAllSortedTodos,
   getAllTodos,
   getFilteredTodos,
+  getPageIndex,
+  getPaginatedTodos,
   getStatusFilter,
   getTodoCounts,
 } from './todo.selectors';
@@ -26,18 +28,62 @@ describe('Todo Selectors', () => {
     status: TodoStatus.InProgress,
     priority: TodoPriority.high,
   };
+  const todo4 = {
+    id: 4,
+    name: 'My fourth todo',
+    status: TodoStatus.InProgress,
+    priority: TodoPriority.low,
+  };
+  const todo5 = {
+    id: 5,
+    name: 'My fifth todo',
+    status: TodoStatus.Complete,
+    priority: TodoPriority.high,
+  };
+  const todo6 = {
+    id: 6,
+    name: 'My sixth todo',
+    status: TodoStatus.Complete,
+    priority: TodoPriority.medium,
+  };
+  const todo7 = {
+    id: 7,
+    name: 'My seventh todo',
+    status: TodoStatus.InProgress,
+    priority: TodoPriority.medium,
+  };
   const todoList: TodoState['todoList'] = [todo1, todo2, todo3];
 
   it('should select the status filter', () => {
     const statusFilter = TodoStatus.Complete;
 
-    const result = getStatusFilter.projector({ todoList: [], statusFilter });
+    const result = getStatusFilter.projector({
+      todoList: [],
+      statusFilter,
+      pageIndex: 0,
+    });
 
     expect(result).toEqual(statusFilter);
   });
 
+  it('should select the page index', () => {
+    const pageIndex = 1;
+
+    const result = getPageIndex.projector({
+      todoList: [],
+      statusFilter: undefined,
+      pageIndex,
+    });
+
+    expect(result).toEqual(pageIndex);
+  });
+
   it('should select all todos without regard for priority', () => {
-    const result = getAllTodos.projector({ todoList, statusFilter: undefined });
+    const result = getAllTodos.projector({
+      todoList,
+      statusFilter: undefined,
+      pageIndex: 0,
+    });
 
     expect(result.length).toEqual(3);
     expect(result[0].id).toEqual(todo1.id);
@@ -110,5 +156,25 @@ describe('Todo Selectors', () => {
     expect(result.total).toEqual(0);
     expect(result[TodoStatus.Complete]).toEqual(0);
     expect(result[TodoStatus.InProgress]).toEqual(0);
+  });
+
+  it('should return pagination information', () => {
+    const pageIndex = 1;
+    const sortedResults = getAllSortedTodos.projector([
+      ...todoList,
+      todo4,
+      todo5,
+      todo6,
+      todo7,
+    ]);
+    const filteredResults = getFilteredTodos.projector(
+      sortedResults,
+      undefined
+    );
+    const result = getPaginatedTodos.projector(filteredResults, pageIndex);
+
+    expect(result.pageIndex).toEqual(1);
+    expect(result.pageSize).toEqual(5);
+    expect(result.items.length).toEqual(2);
   });
 });

@@ -1,6 +1,8 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { TODO_FEATURE_KEY, todoActions } from './todo.actions';
 
+export const PAGE_SIZE = 5;
+
 export enum TodoStatus {
   Complete = 'COMPLETE',
   InProgress = 'IN_PROGRESS',
@@ -22,11 +24,13 @@ export interface Todo {
 export interface TodoState {
   todoList: Todo[];
   statusFilter: TodoStatus | undefined;
+  pageIndex: number;
 }
 
 export const initialState: TodoState = {
   todoList: [],
   statusFilter: undefined,
+  pageIndex: 0,
 };
 
 const todoStatusToggler = {
@@ -38,6 +42,7 @@ const todoReducer = createReducer(
   initialState,
   on(todoActions.getToDoListSuccess, (state, { todoList }) => ({
     ...state,
+    pageIndex: 0,
     todoList,
   })),
   on(todoActions.addToDoItem, (state, { name, priority }) => {
@@ -74,7 +79,15 @@ const todoReducer = createReducer(
   on(todoActions.changeStatusFilter, (state, { status }) => ({
     ...state,
     statusFilter: status,
-  }))
+    pageIndex: 0,
+  })),
+  on(todoActions.changePage, (state, { index }) => {
+    const totalPages = Math.ceil(state.todoList.length / PAGE_SIZE);
+    return {
+      ...state,
+      pageIndex: index >= totalPages ? totalPages - 1 : index,
+    };
+  })
 );
 
 export const todoFeature = createFeature({
