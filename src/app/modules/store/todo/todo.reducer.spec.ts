@@ -27,6 +27,7 @@ describe('TodoReducer', () => {
         },
       ];
       const action = todoActions.getToDoListSuccess({ todoList: newTodoList });
+
       const state = todoFeature.reducer(initialState, action);
 
       expect(state.todoList).toEqual(newTodoList);
@@ -40,6 +41,7 @@ describe('TodoReducer', () => {
       const action = todoActions.changeStatusFilter({
         status: newStatusFilter,
       });
+
       const state = todoFeature.reducer(initialState, action);
 
       expect(state.statusFilter).toEqual(newStatusFilter);
@@ -55,6 +57,7 @@ describe('TodoReducer', () => {
       const action = todoActions.changeStatusFilter({
         status: newStatusFilter,
       });
+
       const state = todoFeature.reducer(previousState, action);
 
       expect(state.statusFilter).toEqual(newStatusFilter);
@@ -76,6 +79,7 @@ describe('TodoReducer', () => {
       };
       const newTodoName = 'My second todo';
       const action = todoActions.addToDoItem({ name: newTodoName });
+
       const state = todoFeature.reducer(previousState, action);
 
       expect(state.todoList[1].name).toEqual(newTodoName);
@@ -140,6 +144,7 @@ describe('TodoReducer', () => {
         todoList: [todo1, todo2],
       };
       const action = todoActions.removeToDoItem({ todo: todo1 });
+
       const state = todoFeature.reducer(previousState, action);
 
       expect(state.todoList.length).toEqual(1);
@@ -163,6 +168,7 @@ describe('TodoReducer', () => {
         todoList: [realTodo],
       };
       const action = todoActions.removeToDoItem({ todo: unkownTodo });
+
       const state = todoFeature.reducer(previousState, action);
 
       expect(state.todoList.length).toEqual(1);

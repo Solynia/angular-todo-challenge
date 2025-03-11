@@ -25,6 +25,7 @@ describe('AppComponent', () => {
 
   it('should render title', () => {
     const compiled = fixture.nativeElement as HTMLElement;
+
     expect(compiled.querySelector('span')?.textContent).toContain(
       'ToDo List App'
     );
