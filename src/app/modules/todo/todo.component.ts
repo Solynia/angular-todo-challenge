@@ -2,7 +2,6 @@ import { AsyncPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
@@ -36,12 +35,7 @@ const indexToStatusConverter: Record<number, TodoStatus | undefined> = {
 })
 export class TodoComponent implements OnInit {
   private readonly store = inject(Store);
-  private readonly dialog = inject(MatDialog);
-
-  readonly statusEnum = TodoStatus;
-
   readonly newTodo = new FormControl<string>('', [Validators.required]);
-
   readonly todos$ = this.store.pipe(select(getFilteredTodos));
 
   ngOnInit(): void {
@@ -51,10 +45,6 @@ export class TodoComponent implements OnInit {
   addNewTodo() {
     if (!this.newTodo.value) return;
     this.store.dispatch(todoActions.addToDoItem({ name: this.newTodo.value }));
-  }
-
-  changeTodoName(todo: Todo) {
-    this.store.dispatch(todoActions.changeToDoName({ todo }));
   }
 
   changeTodoStatus(todo: Todo) {
