@@ -13,7 +13,7 @@
         <span class="col-span-3" [class.line-through]="todo.status === statusEnum.Complete" [class.text-gray-400]="todo.status === statusEnum.Complete">{{ todo.name }}</span>
         <mat-chip highlighted [color]="priorityToColor[todo.priority!]">{{todo.priority | titlecase}}</mat-chip>
         <div class="todo-actions">
-          <button id="deleteBtn" mat-mini-fab color="warn" aria-label="Delete" (click)="deleteClicked.emit(todo)">
+          <button id="deleteBtn" mat-mini-fab color="basic" aria-label="Delete" (click)="deleteClicked.emit(todo)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
