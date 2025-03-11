@@ -3,13 +3,6 @@
   margin: 50px auto;
 }
 
-.todo-list-form {
-  display: flex;
-  align-items: center;
-  margin-bottom: 50px;
-  justify-content: space-around;
-}
-
 .todo-list-form .mat-form-field {
  width: 300px;
  margin-right: 20px;

@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
@@ -29,6 +30,8 @@ const indexToStatusConverter: Record<number, TodoStatus | undefined> = {
   styleUrls: ['./todo.component.css'],
   imports: [
     MatFormField,
+    MatCard,
+    MatCardContent,
     MatSelect,
     MatOption,
     MatLabel,

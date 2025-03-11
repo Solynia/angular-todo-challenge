@@ -1,22 +1,26 @@
 @if ( { todos: todos$ | async }; as vm ) {
-  <div class="container">
-    <div class="todo-list-form" [formGroup]="newTodo">
-      <mat-form-field>
-        <mat-label>Todo List Item</mat-label>
-        <input matInput placeholder="E.g. Send Email" formControlName="name">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Priority</mat-label>
-        <mat-select formControlName="priority">
-          @for (priority of priorities; track priority) {
-            <mat-option [value]="priority">{{ priority | titlecase }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      <button mat-raised-button color="primary" [disabled]="newTodo.invalid" (click)="addNewTodo()">Add Todo</button>
-    </div>
+  <div class="container grid grid-cols-1 gap-4">
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <div class="todo-list-form grid grid-cols-8 gap-4 mt-5" [formGroup]="newTodo">
+          <mat-form-field class="col-span-4">
+            <mat-label>Todo List Item</mat-label>
+            <input matInput placeholder="E.g. Send Email" formControlName="name">
+          </mat-form-field>
+          <mat-form-field class="col-span-2">
+            <mat-label>Priority</mat-label>
+            <mat-select formControlName="priority">
+              @for (priority of priorities; track priority) {
+                <mat-option [value]="priority">{{ priority | titlecase }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <button class="col-span-2" mat-raised-button color="primary" [disabled]="newTodo.invalid" (click)="addNewTodo()">Add Todo</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
 
-    <mat-tab-group (selectedIndexChange)="changeFilter($event)">
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" (selectedIndexChange)="changeFilter($event)">
       <mat-tab label="All">
         <app-edit-todo-list [todos]="vm.todos" emptyPlaceholder="No todos" (completeClicked)="changeTodoStatus($event)" (deleteClicked)="removeTodo($event)" (editClicked)="editTodo($event)"/>
       </mat-tab>
