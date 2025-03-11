@@ -3,6 +3,7 @@ import {
   initialState,
   Todo,
   todoFeature,
+  TodoPriority,
   TodoState,
   TodoStatus,
 } from './todo.reducer';
@@ -78,11 +79,16 @@ describe('TodoReducer', () => {
         ],
       };
       const newTodoName = 'My second todo';
-      const action = todoActions.addToDoItem({ name: newTodoName });
+      const newPriority = TodoPriority.medium;
+      const action = todoActions.addToDoItem({
+        name: newTodoName,
+        priority: newPriority,
+      });
 
       const state = todoFeature.reducer(previousState, action);
 
       expect(state.todoList[1].name).toEqual(newTodoName);
+      expect(state.todoList[1].priority).toEqual(newPriority);
       expect(state.todoList).not.toBe(previousState.todoList);
     });
   });

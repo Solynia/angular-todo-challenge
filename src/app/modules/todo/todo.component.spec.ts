@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { todoActions } from '../store/todo/todo.actions';
+import { TodoPriority } from '../store/todo/todo.reducer';
 import { TodoComponent } from './todo.component';
 
 describe('TodoComponent', () => {
@@ -36,7 +37,10 @@ describe('TodoComponent', () => {
       button.click();
 
       expect(dispatchSpy).toHaveBeenCalledWith(
-        todoActions.addToDoItem({ name: 'My first todo' })
+        todoActions.addToDoItem({
+          name: 'My first todo',
+          priority: TodoPriority.medium,
+        })
       );
     });
   });
@@ -49,7 +53,33 @@ describe('TodoComponent', () => {
     button.click();
 
     expect(dispatchSpy).not.toHaveBeenCalledWith(
-      todoActions.addToDoItem({ name: 'My first todo' })
+      todoActions.addToDoItem({
+        name: 'My first todo',
+        priority: TodoPriority.medium,
+      })
     );
+  });
+
+  it('should submit the priority', async () => {
+    const dispatchSpy = jest.spyOn(store, 'dispatch');
+    const compiled = fixture.nativeElement as HTMLElement;
+    const button = compiled.querySelector('button')!;
+
+    component.newTodo.setValue({
+      name: 'My first todo',
+      priority: TodoPriority.high,
+    });
+
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      button.click();
+
+      expect(dispatchSpy).toHaveBeenCalledWith(
+        todoActions.addToDoItem({
+          name: 'My first todo',
+          priority: TodoPriority.high,
+        })
+      );
+    });
   });
 });

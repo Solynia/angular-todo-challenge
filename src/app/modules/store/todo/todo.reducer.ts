@@ -40,11 +40,16 @@ const todoReducer = createReducer(
     ...state,
     todoList,
   })),
-  on(todoActions.addToDoItem, (state, { name }) => {
+  on(todoActions.addToDoItem, (state, { name, priority }) => {
     // id would be handled in the backend
     const ids = state.todoList.map((t) => t.id);
     const nextId = state.todoList.length ? Math.max(...ids) + 1 : 1;
-    const newTodo: Todo = { id: nextId, name, status: TodoStatus.InProgress };
+    const newTodo: Todo = {
+      id: nextId,
+      name,
+      status: TodoStatus.InProgress,
+      priority,
+    };
     return {
       ...state,
       todoList: [...state.todoList, newTodo],
