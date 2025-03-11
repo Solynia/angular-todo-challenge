@@ -1,4 +1,4 @@
-import { TodoState, TodoStatus } from './todo.reducer';
+import { TodoPriority, TodoState, TodoStatus } from './todo.reducer';
 import {
   getAllTodos,
   getFilteredTodos,
@@ -10,13 +10,21 @@ describe('Todo Selectors', () => {
     id: 1,
     name: 'My first todo',
     status: TodoStatus.Complete,
+    priority: TodoPriority.low,
   };
   const todo2 = {
     id: 2,
     name: 'My second todo',
     status: TodoStatus.InProgress,
+    priority: TodoPriority.medium,
   };
-  const todoList: TodoState['todoList'] = [todo1, todo2];
+  const todo3 = {
+    id: 3,
+    name: 'My third todo',
+    status: TodoStatus.InProgress,
+    priority: TodoPriority.high,
+  };
+  const todoList: TodoState['todoList'] = [todo1, todo2, todo3];
 
   it('should select the status filter', () => {
     const statusFilter = TodoStatus.Complete;
@@ -29,14 +37,14 @@ describe('Todo Selectors', () => {
   it('should select all todos', () => {
     const result = getAllTodos.projector({ todoList, statusFilter: undefined });
 
-    expect(result.length).toEqual(2);
+    expect(result.length).toEqual(3);
     expect(result[1].id).toEqual(todo2.id);
   });
 
   it('should select in progress todos', () => {
     const result = getFilteredTodos.projector(todoList, TodoStatus.InProgress);
 
-    expect(result.length).toEqual(1);
+    expect(result.length).toEqual(2);
     expect(result[0].id).toEqual(todo2.id);
   });
 
@@ -50,7 +58,7 @@ describe('Todo Selectors', () => {
   it('should select all todos when filter is not set', () => {
     const result = getFilteredTodos.projector(todoList, undefined);
 
-    expect(result.length).toEqual(2);
+    expect(result.length).toEqual(3);
     expect(result[1].id).toEqual(todo2.id);
   });
 });
