@@ -21,5 +21,8 @@
     } @empty {
       <p class="todo-item">{{ emptyPlaceholder() }}</p>
     }
+    @if (todos().length) {
+      <mat-paginator hidePageSize [length]="count()" [pageIndex]="pageIndex()" [pageSize]="pageSize()" (page)="pageChanged.emit($event.pageIndex)" />
+    }
   </mat-card-content>
 </mat-card>

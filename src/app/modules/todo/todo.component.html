@@ -1,4 +1,4 @@
-@if ( { todos: todos$ | async, lists: lists$ | async}; as vm ) {
+@if ( { todoPage: todoPage$ | async, lists: lists$ | async }; as vm ) {
   <div class="container grid grid-cols-1">
     <h1>Create Todos</h1>
     <mat-card appearance="outlined" class="mb-4">
@@ -25,7 +25,7 @@
     <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" (selectedIndexChange)="changeFilter($event)">
       @for (list of vm.lists; track $index) {
         <mat-tab [label]="list.label">
-          <app-edit-todo-list [todos]="vm.todos" [emptyPlaceholder]="list.emptyPlaceholder" (completeClicked)="changeTodoStatus($event)" (deleteClicked)="removeTodo($event)" (editClicked)="editTodo($event)"/>
+          <app-edit-todo-list [todos]="vm.todoPage!.items" [emptyPlaceholder]="list.emptyPlaceholder" [count]="list.count" [pageIndex]="vm.todoPage!.pageIndex" [pageSize]="vm.todoPage!.pageSize" (pageChanged)="changePage($event)" (completeClicked)="changeTodoStatus($event)" (deleteClicked)="removeTodo($event)" (editClicked)="editTodo($event)"/>
         </mat-tab>
       }
     </mat-tab-group>

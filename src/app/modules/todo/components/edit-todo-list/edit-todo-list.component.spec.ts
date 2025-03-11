@@ -35,6 +35,9 @@ describe('EditTodoListComponent', () => {
   it('should render every received todo', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     componentRef.setInput('todos', todos);
+    componentRef.setInput('count', 2);
+    componentRef.setInput('pageIndex', 0);
+    componentRef.setInput('pageSize', 5);
     fixture.detectChanges();
 
     expect(compiled.querySelectorAll('.todo-item').length).toBe(2);
@@ -45,6 +48,9 @@ describe('EditTodoListComponent', () => {
     componentRef.setInput('todos', []);
     const emptyPlaceholder = 'No todos';
     componentRef.setInput('emptyPlaceholder', emptyPlaceholder);
+    componentRef.setInput('count', 0);
+    componentRef.setInput('pageIndex', 0);
+    componentRef.setInput('pageSize', 5);
     fixture.detectChanges();
 
     const items = compiled.querySelectorAll('.todo-item');
@@ -56,6 +62,9 @@ describe('EditTodoListComponent', () => {
     let selectedTodo;
     component.completeClicked.subscribe((todo) => (selectedTodo = todo));
     componentRef.setInput('todos', todos);
+    componentRef.setInput('count', 2);
+    componentRef.setInput('pageIndex', 0);
+    componentRef.setInput('pageSize', 5);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const button = compiled.querySelector<HTMLButtonElement>('#completeBtn')!;
@@ -69,6 +78,9 @@ describe('EditTodoListComponent', () => {
     let selectedTodo;
     component.deleteClicked.subscribe((todo) => (selectedTodo = todo));
     componentRef.setInput('todos', todos);
+    componentRef.setInput('count', 2);
+    componentRef.setInput('pageIndex', 0);
+    componentRef.setInput('pageSize', 5);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const button = compiled.querySelector<HTMLButtonElement>('#deleteBtn')!;
@@ -82,6 +94,9 @@ describe('EditTodoListComponent', () => {
     let selectedTodo;
     component.editClicked.subscribe((todo) => (selectedTodo = todo));
     componentRef.setInput('todos', todos);
+    componentRef.setInput('count', 2);
+    componentRef.setInput('pageIndex', 0);
+    componentRef.setInput('pageSize', 5);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const div = compiled.querySelector<HTMLDivElement>(

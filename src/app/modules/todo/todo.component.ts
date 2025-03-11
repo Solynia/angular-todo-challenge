@@ -15,7 +15,7 @@ import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { createSelector, Store } from '@ngrx/store';
 import { todoActions } from '../store/todo/todo.actions';
 import { Todo, TodoPriority, TodoStatus } from '../store/todo/todo.reducer';
-import { getFilteredTodos, getTodoCounts } from '../store/todo/todo.selectors';
+import { getPaginatedTodos, getTodoCounts } from '../store/todo/todo.selectors';
 import { EditTodoListComponent } from './components/edit-todo-list/edit-todo-list.component';
 
 const indexToStatusConverter: Record<number, TodoStatus | undefined> = {
@@ -26,12 +26,18 @@ const indexToStatusConverter: Record<number, TodoStatus | undefined> = {
 
 const getLists = createSelector(getTodoCounts, (counts) => {
   return [
-    { label: `All Todos (${counts.total})`, emptyPlaceholder: 'No todos' },
     {
+      count: counts.total,
+      label: `All Todos (${counts.total})`,
+      emptyPlaceholder: 'No todos',
+    },
+    {
+      count: counts.IN_PROGRESS,
       label: `In Progress (${counts.IN_PROGRESS})`,
       emptyPlaceholder: 'No todos in progress',
     },
     {
+      count: counts.COMPLETE,
       label: `Completed (${counts.COMPLETE})`,
       emptyPlaceholder: 'No completed todos',
     },
@@ -71,7 +77,7 @@ export class TodoComponent implements OnInit {
       validators: [Validators.required],
     }),
   });
-  readonly todos$ = this.store.select(getFilteredTodos);
+  readonly todoPage$ = this.store.select(getPaginatedTodos);
   priorities = Object.values(TodoPriority);
   readonly lists$ = this.store.select(getLists);
 
@@ -105,5 +111,9 @@ export class TodoComponent implements OnInit {
     this.store.dispatch(
       todoActions.changeStatusFilter({ status: indexToStatusConverter[index] })
     );
+  }
+
+  changePage(index: number) {
+    this.store.dispatch(todoActions.changePage({ index }));
   }
 }

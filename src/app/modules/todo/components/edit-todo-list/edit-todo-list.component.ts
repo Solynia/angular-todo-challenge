@@ -5,6 +5,7 @@ import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatChip } from '@angular/material/chips';
 import { MatDivider } from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
+import { MatPaginator } from '@angular/material/paginator';
 import { Todo } from 'src/app/modules/store/todo/todo.reducer';
 
 export enum TodoStatus {
@@ -29,6 +30,7 @@ const priorityToColorConverter = {
   selector: 'app-edit-todo-list',
   imports: [
     MatIcon,
+    MatPaginator,
     MatMiniFabButton,
     MatCard,
     MatCardContent,
@@ -45,6 +47,10 @@ export class EditTodoListComponent {
 
   todos = input([], { transform: defaultArray });
   emptyPlaceholder = input<string>();
+  count = input.required<number>();
+  pageIndex = input.required<number>();
+  pageSize = input.required<number>();
+  pageChanged = output<number>();
   completeClicked = output<Todo>();
   deleteClicked = output<Todo>();
   editClicked = output<Todo>();
