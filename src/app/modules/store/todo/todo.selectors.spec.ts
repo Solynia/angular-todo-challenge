@@ -1,5 +1,6 @@
 import { TodoPriority, TodoState, TodoStatus } from './todo.reducer';
 import {
+  getAllSortedTodos,
   getAllTodos,
   getFilteredTodos,
   getStatusFilter,
@@ -34,31 +35,63 @@ describe('Todo Selectors', () => {
     expect(result).toEqual(statusFilter);
   });
 
-  it('should select all todos', () => {
+  it('should select all todos without regard for priority', () => {
     const result = getAllTodos.projector({ todoList, statusFilter: undefined });
 
     expect(result.length).toEqual(3);
+    expect(result[0].id).toEqual(todo1.id);
     expect(result[1].id).toEqual(todo2.id);
+    expect(result[2].id).toEqual(todo3.id);
+  });
+
+  it('should select all todos sorted by priority', () => {
+    const result = getAllSortedTodos.projector(todoList);
+
+    expect(result.length).toEqual(3);
+    expect(result[0].id).toEqual(todo3.id);
+    expect(result[1].id).toEqual(todo2.id);
+    expect(result[2].id).toEqual(todo1.id);
   });
 
   it('should select in progress todos', () => {
-    const result = getFilteredTodos.projector(todoList, TodoStatus.InProgress);
+    const result = getFilteredTodos.projector(
+      getAllSortedTodos.projector(todoList),
+      TodoStatus.InProgress
+    );
 
     expect(result.length).toEqual(2);
-    expect(result[0].id).toEqual(todo2.id);
+    expect(result[1].id).toEqual(todo2.id);
   });
 
   it('should select completed todos', () => {
-    const result = getFilteredTodos.projector(todoList, TodoStatus.Complete);
+    const result = getFilteredTodos.projector(
+      getAllSortedTodos.projector(todoList),
+      TodoStatus.Complete
+    );
 
     expect(result.length).toEqual(1);
     expect(result[0].id).toEqual(todo1.id);
   });
 
   it('should select all todos when filter is not set', () => {
-    const result = getFilteredTodos.projector(todoList, undefined);
+    const result = getFilteredTodos.projector(
+      getAllSortedTodos.projector(todoList),
+      undefined
+    );
 
     expect(result.length).toEqual(3);
     expect(result[1].id).toEqual(todo2.id);
+  });
+
+  it('should sort filtered todos by priority', () => {
+    const result = getFilteredTodos.projector(
+      getAllSortedTodos.projector(todoList),
+      undefined
+    );
+
+    expect(result.length).toEqual(3);
+    expect(result[0].id).toEqual(todo3.id);
+    expect(result[1].id).toEqual(todo2.id);
+    expect(result[2].id).toEqual(todo1.id);
   });
 });
