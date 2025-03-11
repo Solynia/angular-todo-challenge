@@ -9,8 +9,14 @@ import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { select, Store } from '@ngrx/store';
 import { todoActions } from '../store/todo/todo.actions';
 import { Todo, TodoStatus } from '../store/todo/todo.reducer';
-import { getAllTodos } from '../store/todo/todo.selectors';
+import { getFilteredTodos } from '../store/todo/todo.selectors';
 import { EditTodoListComponent } from './components/edit-todo-list/edit-todo-list.component';
+
+const indexToStatusConverter: Record<number, TodoStatus | undefined> = {
+  0: undefined,
+  1: TodoStatus.InProgress,
+  2: TodoStatus.Complete,
+};
 
 @Component({
   selector: 'app-todo',
@@ -36,7 +42,7 @@ export class TodoComponent implements OnInit {
 
   readonly newTodo = new FormControl<string>('', [Validators.required]);
 
-  readonly allTodos$ = this.store.pipe(select(getAllTodos));
+  readonly todos$ = this.store.pipe(select(getFilteredTodos));
 
   ngOnInit(): void {
     this.store.dispatch(todoActions.getToDoList());
@@ -57,5 +63,11 @@ export class TodoComponent implements OnInit {
 
   removeTodo(todo: Todo) {
     this.store.dispatch(todoActions.removeToDoItem({ todo }));
+  }
+
+  changeFilter(index: number) {
+    this.store.dispatch(
+      todoActions.changeStatusFilter({ status: indexToStatusConverter[index] })
+    );
   }
 }

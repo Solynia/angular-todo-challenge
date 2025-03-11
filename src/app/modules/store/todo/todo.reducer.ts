@@ -14,10 +14,12 @@ export interface Todo {
 
 export interface TodoState {
   todoList: Todo[];
+  statusFilter: TodoStatus | undefined;
 }
 
 export const initialState: TodoState = {
   todoList: [],
+  statusFilter: undefined,
 };
 
 const todoReducer = createReducer(
@@ -31,6 +33,10 @@ const todoReducer = createReducer(
     todoList: state.todoList.map((el) =>
       el.id === todo.id ? { ...el, name: todo.name } : el
     ),
+  })),
+  on(todoActions.changeStatusFilter, (state, { status }) => ({
+    ...state,
+    statusFilter: status,
   }))
 );
 

@@ -1,4 +1,4 @@
-@if ( { allTodos: allTodos$ | async}; as vm ) {
+@if ( { todos: todos$ | async}; as vm ) {
   <div class="container">
     <div class="todo-list-form">
       <mat-form-field>
@@ -8,15 +8,15 @@
       <button mat-raised-button color="primary" [disabled]="newTodo.invalid" (click)="addNewTodo()">Add Todo</button>
     </div>
 
-    <mat-tab-group>
+    <mat-tab-group (selectedIndexChange)="changeFilter($event)">
       <mat-tab label="All">
-        <app-edit-todo-list [todos]="vm.allTodos" emptyPlaceholder="No todos" (completeClicked)="changeTodoStatus($event)" (deleteClicked)="removeTodo($event)"/>
+        <app-edit-todo-list [todos]="vm.todos" emptyPlaceholder="No todos" (completeClicked)="changeTodoStatus($event)" (deleteClicked)="removeTodo($event)"/>
       </mat-tab>
       <mat-tab label="In Progress">
-        <app-edit-todo-list [todos]="vm.allTodos" emptyPlaceholder="No todos in progress" (completeClicked)="changeTodoStatus($event)" (deleteClicked)="removeTodo($event)"/>
+        <app-edit-todo-list [todos]="vm.todos" emptyPlaceholder="No todos in progress" (completeClicked)="changeTodoStatus($event)" (deleteClicked)="removeTodo($event)"/>
       </mat-tab>
       <mat-tab label="Completed">
-        <app-edit-todo-list [todos]="vm.allTodos" emptyPlaceholder="No completed todos" (completeClicked)="changeTodoStatus($event)" (deleteClicked)="removeTodo($event)"/>
+        <app-edit-todo-list [todos]="vm.todos" emptyPlaceholder="No completed todos" (completeClicked)="changeTodoStatus($event)" (deleteClicked)="removeTodo($event)"/>
       </mat-tab>
     </mat-tab-group>
   </div>
