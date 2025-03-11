@@ -5,7 +5,7 @@ import { MatButton } from '@angular/material/button';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { todoActions } from '../store/todo/todo.actions';
 import { Todo, TodoStatus } from '../store/todo/todo.reducer';
 import { getFilteredTodos } from '../store/todo/todo.selectors';
@@ -36,7 +36,7 @@ const indexToStatusConverter: Record<number, TodoStatus | undefined> = {
 export class TodoComponent implements OnInit {
   private readonly store = inject(Store);
   readonly newTodo = new FormControl<string>('', [Validators.required]);
-  readonly todos$ = this.store.pipe(select(getFilteredTodos));
+  readonly todos$ = this.store.select(getFilteredTodos);
 
   ngOnInit(): void {
     this.store.dispatch(todoActions.getToDoList());
