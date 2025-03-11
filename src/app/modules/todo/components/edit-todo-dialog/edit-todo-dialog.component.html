@@ -1,11 +1,21 @@
 <h1 mat-dialog-title>Edit ToDo</h1>
 <div mat-dialog-content>
-  <mat-form-field>
-    <mat-label>New ToDo name</mat-label>
-    <input matInput [(ngModel)]="newName">
-  </mat-form-field>
+  <div class="grid grid-cols-2 gap-4" [formGroup]="form">
+    <mat-form-field>
+      <mat-label>ToDo name</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Priority</mat-label>
+      <mat-select formControlName="priority">
+        @for (priority of priorities; track priority) {
+          <mat-option [value]="priority">{{ priority | titlecase }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>
 <div mat-dialog-actions align="end">
   <button mat-button id="cancelBtn" (click)="onCancel()">Cancel</button>
-  <button mat-button id="submitBtn" [disabled]="!newName" (click)="onSubmit()" cdkFocusInitial>Ok</button>
+  <button mat-button id="submitBtn" [disabled]="form.invalid" (click)="onSubmit()" cdkFocusInitial>Ok</button>
 </div>

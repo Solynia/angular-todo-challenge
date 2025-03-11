@@ -78,7 +78,7 @@ export class TodoComponent implements OnInit {
     }),
   });
   readonly todoPage$ = this.store.select(getPaginatedTodos);
-  priorities = Object.values(TodoPriority);
+  readonly priorities = Object.values(TodoPriority);
   readonly lists$ = this.store.select(getLists);
 
   ngOnInit(): void {

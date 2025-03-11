@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { TodoPriority } from '../edit-todo-list/edit-todo-list.component';
 import {
   EditTodoDialogComponent,
   EditTodoDialogData,
@@ -8,7 +9,7 @@ import {
 describe('EditTodoDialogComponent', () => {
   let component: EditTodoDialogComponent;
   let fixture: ComponentFixture<EditTodoDialogComponent>;
-  const todo = { name: 'My first todo' };
+  const todo = { name: 'My first todo', priority: TodoPriority.high };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -37,8 +38,7 @@ describe('EditTodoDialogComponent', () => {
   it('should submit the valid todo name', () => {
     const submitSpy = jest.spyOn(component, 'onSubmit');
     const compiled = fixture.nativeElement as HTMLElement;
-    const button =
-      compiled.querySelector<HTMLButtonElement>('button#submitBtn')!;
+    const button = compiled.querySelector<HTMLButtonElement>('#submitBtn')!;
     const input = compiled.querySelector('input')!;
     const newName = `${todo.name} - edited`;
     input.value = newName;
@@ -48,15 +48,14 @@ describe('EditTodoDialogComponent', () => {
       button.click();
 
       expect(submitSpy).toHaveBeenCalled();
-      expect(component.newName).toBe(newName);
+      expect(component.form.value.name).toBe(newName);
     });
   });
 
   it('should not submit an invalid todo name', () => {
     const submitSpy = jest.spyOn(component, 'onSubmit');
     const compiled = fixture.nativeElement as HTMLElement;
-    const button =
-      compiled.querySelector<HTMLButtonElement>('button#submitBtn')!;
+    const button = compiled.querySelector<HTMLButtonElement>('#submitBtn')!;
     const input = compiled.querySelector('input')!;
     const newName = '';
     input.value = newName;
@@ -66,15 +65,14 @@ describe('EditTodoDialogComponent', () => {
       button.click();
 
       expect(submitSpy).not.toHaveBeenCalled();
-      expect(component.newName).toBe(newName);
+      expect(component.form.value.name).toBe(newName);
     });
   });
 
   it('should cancel the edit', () => {
     const cancelSpy = jest.spyOn(component, 'onCancel');
     const compiled = fixture.nativeElement as HTMLElement;
-    const button =
-      compiled.querySelector<HTMLButtonElement>('button#cancelBtn')!;
+    const button = compiled.querySelector<HTMLButtonElement>('#cancelBtn')!;
 
     button.click();
 
