@@ -1,4 +1,5 @@
 import { ApplicationConfig, isDevMode } from '@angular/core';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
@@ -16,5 +17,9 @@ export const appConfig: ApplicationConfig = {
     provideState(todoFeature),
     provideEffects([TodoEffects]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'outline', floatLabel: 'always' },
+    },
   ],
 };
