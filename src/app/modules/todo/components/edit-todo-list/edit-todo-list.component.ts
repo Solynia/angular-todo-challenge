@@ -16,4 +16,5 @@ export class EditTodoListComponent {
   emptyPlaceholder = input<string>();
   completeClicked = output<Todo>();
   deleteClicked = output<Todo>();
+  editClicked = output<Todo>();
 }

@@ -81,4 +81,17 @@ describe('EditTodoListComponent', () => {
 
     expect(selectedTodo).toBe(todo1);
   });
+
+  it('should mark todo as edited', () => {
+    let selectedTodo;
+    component.editClicked.subscribe((todo) => (selectedTodo = todo));
+    componentRef.setInput('todos', todos);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const div = compiled.querySelector<HTMLDivElement>('.todo-item')!;
+
+    div.click();
+
+    expect(selectedTodo).toBe(todo1);
+  });
 });

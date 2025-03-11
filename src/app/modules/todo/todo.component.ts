@@ -55,6 +55,10 @@ export class TodoComponent implements OnInit {
     this.store.dispatch(todoActions.removeToDoItem({ todo }));
   }
 
+  editTodo(todo: Todo) {
+    this.store.dispatch(todoActions.openToDoEdit({ todo }));
+  }
+
   changeFilter(index: number) {
     this.store.dispatch(
       todoActions.changeStatusFilter({ status: indexToStatusConverter[index] })

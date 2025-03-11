@@ -1,5 +1,5 @@
 @for (todo of todos(); track todo) {
-  <div class="todo-item">
+  <div class="todo-item" (click)="editClicked.emit(todo)">
     <span>{{ todo.name }}</span>
     <div class="todo-actions">
       <button mat-mini-fab color="primary" aria-label="Complete" (click)="completeClicked.emit(todo)">
