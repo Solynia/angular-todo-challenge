@@ -82,4 +82,44 @@ describe('TodoReducer', () => {
       expect(state.todoList).not.toBe(previousState.todoList);
     });
   });
+
+  describe('changeToDoStatus action', () => {
+    it('should change status from InProgress to Complete and update the state in an immutable way', () => {
+      const todo = {
+        id: 1,
+        name: 'My first todo',
+        status: TodoStatus.InProgress,
+      };
+      const previousState: TodoState = {
+        ...initialState,
+        todoList: [todo],
+      };
+      const action = todoActions.changeToDoStatus({ todo });
+
+      const state = todoFeature.reducer(previousState, action);
+
+      expect(state.todoList[0].id).toEqual(1);
+      expect(state.todoList[0].status).toEqual(TodoStatus.Complete);
+      expect(state.todoList).not.toBe(previousState.todoList);
+    });
+
+    it('should change status from Complete to InProgress and update the state in an immutable way', () => {
+      const todo = {
+        id: 1,
+        name: 'My first todo',
+        status: TodoStatus.Complete,
+      };
+      const previousState: TodoState = {
+        ...initialState,
+        todoList: [todo],
+      };
+      const action = todoActions.changeToDoStatus({ todo });
+
+      const state = todoFeature.reducer(previousState, action);
+
+      expect(state.todoList[0].id).toEqual(1);
+      expect(state.todoList[0].status).toEqual(TodoStatus.InProgress);
+      expect(state.todoList).not.toBe(previousState.todoList);
+    });
+  });
 });

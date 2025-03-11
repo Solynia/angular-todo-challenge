@@ -22,6 +22,11 @@ export const initialState: TodoState = {
   statusFilter: undefined,
 };
 
+const todoStatusToggler = {
+  [TodoStatus.InProgress]: TodoStatus.Complete,
+  [TodoStatus.Complete]: TodoStatus.InProgress,
+};
+
 const todoReducer = createReducer(
   initialState,
   on(todoActions.getToDoListSuccess, (state, { todoList }) => ({
@@ -38,6 +43,12 @@ const todoReducer = createReducer(
       todoList: [...state.todoList, newTodo],
     };
   }),
+  on(todoActions.changeToDoStatus, (state, { todo }) => ({
+    ...state,
+    todoList: state.todoList.map((el) =>
+      el.id === todo.id ? { ...el, status: todoStatusToggler[el.status] } : el
+    ),
+  })),
   on(todoActions.changeToDoName, (state, { todo }) => ({
     ...state,
     todoList: state.todoList.map((el) =>
