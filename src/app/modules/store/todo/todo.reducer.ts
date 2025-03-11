@@ -55,6 +55,10 @@ const todoReducer = createReducer(
       el.id === todo.id ? { ...el, name: todo.name } : el
     ),
   })),
+  on(todoActions.removeToDoItem, (state, { todo }) => ({
+    ...state,
+    todoList: state.todoList.filter((el) => el.id !== todo.id),
+  })),
   on(todoActions.changeStatusFilter, (state, { status }) => ({
     ...state,
     statusFilter: status,

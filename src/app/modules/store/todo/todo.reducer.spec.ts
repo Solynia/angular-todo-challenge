@@ -122,4 +122,52 @@ describe('TodoReducer', () => {
       expect(state.todoList).not.toBe(previousState.todoList);
     });
   });
+
+  describe('removeToDoItem action', () => {
+    it('should retrieve remaining todos and update the state in an immutable way', () => {
+      const todo1 = {
+        id: 1,
+        name: 'My first todo',
+        status: TodoStatus.Complete,
+      };
+      const todo2 = {
+        id: 2,
+        name: 'My second todo',
+        status: TodoStatus.InProgress,
+      };
+      const previousState: TodoState = {
+        ...initialState,
+        todoList: [todo1, todo2],
+      };
+      const action = todoActions.removeToDoItem({ todo: todo1 });
+      const state = todoFeature.reducer(previousState, action);
+
+      expect(state.todoList.length).toEqual(1);
+      expect(state.todoList[0].id).toEqual(2);
+      expect(state.todoList).not.toBe(previousState.todoList);
+    });
+
+    it('should not change the state when the todo does not exist', () => {
+      const realTodo = {
+        id: 1,
+        name: 'My first todo',
+        status: TodoStatus.Complete,
+      };
+      const unkownTodo = {
+        id: 2,
+        name: 'My second todo',
+        status: TodoStatus.InProgress,
+      };
+      const previousState: TodoState = {
+        ...initialState,
+        todoList: [realTodo],
+      };
+      const action = todoActions.removeToDoItem({ todo: unkownTodo });
+      const state = todoFeature.reducer(previousState, action);
+
+      expect(state.todoList.length).toEqual(1);
+      expect(state.todoList[0].id).toEqual(1);
+      expect(state.todoList).toEqual(previousState.todoList);
+    });
+  });
 });
