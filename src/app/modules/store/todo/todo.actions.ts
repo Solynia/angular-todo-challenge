@@ -14,5 +14,6 @@ export const todoActions = createActionGroup({
     'Change ToDo Status': props<{ todo: Todo }>(), //changeToDoStatus
     'Remove ToDo Item': props<{ todo: Todo }>(), //removeToDoItem
     'Change Status Filter': props<{ status: TodoStatus | undefined }>(), //changeStatusFilter
+    'Open ToDo Edit': props<{ todo: Todo }>(), //openToDoEdit
   },
 });
