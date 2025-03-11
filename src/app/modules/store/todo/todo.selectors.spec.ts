@@ -4,6 +4,7 @@ import {
   getAllTodos,
   getFilteredTodos,
   getStatusFilter,
+  getTodoCounts,
 } from './todo.selectors';
 
 describe('Todo Selectors', () => {
@@ -93,5 +94,21 @@ describe('Todo Selectors', () => {
     expect(result[0].id).toEqual(todo3.id);
     expect(result[1].id).toEqual(todo2.id);
     expect(result[2].id).toEqual(todo1.id);
+  });
+
+  it('should return todo count per status', () => {
+    const result = getTodoCounts.projector(todoList);
+
+    expect(result.total).toEqual(3);
+    expect(result[TodoStatus.Complete]).toEqual(1);
+    expect(result[TodoStatus.InProgress]).toEqual(2);
+  });
+
+  it('should return safe todo count per status', () => {
+    const result = getTodoCounts.projector([]);
+
+    expect(result.total).toEqual(0);
+    expect(result[TodoStatus.Complete]).toEqual(0);
+    expect(result[TodoStatus.InProgress]).toEqual(0);
   });
 });

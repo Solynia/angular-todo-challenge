@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { todoFeature, TodoPriority } from './todo.reducer';
+import { todoFeature, TodoPriority, TodoStatus } from './todo.reducer';
 
 export const {
   selectTodoList: getAllTodos,
@@ -31,3 +31,15 @@ export const getFilteredTodos = createSelector(
     return todos.filter((todo) => todo.status === statusFilter);
   }
 );
+
+export const getTodoCounts = createSelector(getAllTodos, (todos) => {
+  return {
+    total: todos.length,
+    [TodoStatus.Complete]: todos.filter(
+      (todo) => todo.status === TodoStatus.Complete
+    ).length,
+    [TodoStatus.InProgress]: todos.filter(
+      (todo) => todo.status === TodoStatus.InProgress
+    ).length,
+  };
+});
