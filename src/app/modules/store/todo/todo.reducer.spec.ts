@@ -61,4 +61,25 @@ describe('TodoReducer', () => {
       expect(state.statusFilter).not.toBe(previousState.statusFilter);
     });
   });
+
+  describe('addToDoItem action', () => {
+    it('should retrieve existing todos and new todo and update the state in an immutable way', () => {
+      const previousState: TodoState = {
+        ...initialState,
+        todoList: [
+          {
+            id: 1,
+            name: 'My first todo',
+            status: TodoStatus.Complete,
+          },
+        ],
+      };
+      const newTodoName = 'My second todo';
+      const action = todoActions.addToDoItem({ name: newTodoName });
+      const state = todoFeature.reducer(previousState, action);
+
+      expect(state.todoList[1].name).toEqual(newTodoName);
+      expect(state.todoList).not.toBe(previousState.todoList);
+    });
+  });
 });
