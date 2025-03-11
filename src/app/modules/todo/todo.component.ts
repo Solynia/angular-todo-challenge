@@ -24,6 +24,12 @@ const indexToStatusConverter: Record<number, TodoStatus | undefined> = {
   2: TodoStatus.Complete,
 };
 
+const prepareListLabels = () => [
+  { label: 'All', emptyPlaceholder: 'No todos' },
+  { label: 'In Progress', emptyPlaceholder: 'No todos in progress' },
+  { label: 'Completed', emptyPlaceholder: 'No completed todos' },
+];
+
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
@@ -59,6 +65,7 @@ export class TodoComponent implements OnInit {
   });
   readonly todos$ = this.store.select(getFilteredTodos);
   priorities = Object.values(TodoPriority);
+  readonly lists = prepareListLabels();
 
   ngOnInit(): void {
     this.store.dispatch(todoActions.getToDoList());
