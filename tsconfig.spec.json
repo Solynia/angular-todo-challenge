@@ -7,7 +7,7 @@
     "types": ["jest"]
   },
   "files": [
-    "src/test.ts",
+    "setup-jest.ts",
     "src/polyfills.ts"
   ],
   "include": [
