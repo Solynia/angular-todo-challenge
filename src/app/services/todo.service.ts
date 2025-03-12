@@ -50,6 +50,6 @@ const todos: Todo[] = [
 @Injectable({ providedIn: 'root' })
 export class TodoService {
   getAll() {
-    return of([]);
+    return of(todos);
   }
 }

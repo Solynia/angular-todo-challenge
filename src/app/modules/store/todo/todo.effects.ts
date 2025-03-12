@@ -4,19 +4,19 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, filter, map, switchMap } from 'rxjs/operators';
 import { Todo } from '../../../services/todo.interface';
+import { TodoService } from '../../../services/todo.service';
 import {
   EditTodoDialogComponent,
   EditTodoDialogData,
 } from '../../todo/components/edit-todo-dialog/edit-todo-dialog.component';
 import { todoActions } from './todo.actions';
-import { todos } from './todo.const';
 
 export const getToDoList$ = createEffect(
-  (actions$ = inject(Actions)) =>
+  (actions$ = inject(Actions), todoService = inject(TodoService)) =>
     actions$.pipe(
       ofType(todoActions.getToDoList),
       switchMap((_action) =>
-        of(todos).pipe(
+        todoService.getAll().pipe(
           map((todoList) => todoActions.getToDoListSuccess({ todoList })),
           catchError((error) => of(todoActions.getToDoListFailure({ error })))
         )

@@ -7,8 +7,9 @@ import { getToDoList$, openEditToDoDialog$ } from './todo.effects';
 describe('ToDoEffects', () => {
   it('loads todos successfully', (done) => {
     const actionsMock$ = of(todoActions.getToDoList());
+    const todoServiceMock = { getAll: () => of(todos) };
 
-    getToDoList$(actionsMock$).subscribe((action) => {
+    getToDoList$(actionsMock$, todoServiceMock).subscribe((action) => {
       expect(action).toEqual(
         todoActions.getToDoListSuccess({ todoList: todos })
       );
