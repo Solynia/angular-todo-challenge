@@ -1,22 +1,44 @@
 @if ( { todoPage: todoPage$ | async, lists: lists$ | async }; as vm ) {
-  <div class="container grid grid-cols-1">
-    <h1>Create Todos</h1>
-    <mat-card appearance="outlined" class="mb-4">
-      <mat-card-content>
-        <div class="todo-list-form flex gap-4 mt-5">
-          <app-todo-input-form [formControl]="control"/>
-          <button class="col-span-2" mat-raised-button color="primary" [disabled]="control.invalid" (click)="addNewTodo()">Add Todo</button>
-        </div>
-      </mat-card-content>
-    </mat-card>
+<div class="container grid grid-cols-1">
+  <h1>Create Todos</h1>
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-content>
+      <div class="todo-list-form flex gap-4 mt-5">
+        <app-todo-input-form [formControl]="control" />
+        <button
+          class="col-span-2"
+          mat-raised-button
+          color="primary"
+          [disabled]="control.invalid"
+          (click)="addNewTodo()"
+        >
+          Add Todo
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
-    <h1>Todos</h1>
-    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" (selectedIndexChange)="changeFilter($event)">
-      @for (list of vm.lists; track $index) {
-        <mat-tab [label]="list.label">
-          <app-edit-todo-list [todos]="vm.todoPage!.items" [emptyPlaceholder]="list.emptyPlaceholder" [count]="list.count" [pageIndex]="vm.todoPage!.pageIndex" [pageSize]="vm.todoPage!.pageSize" (pageChanged)="changePage($event)" (completeClicked)="changeTodoStatus($event)" (deleteClicked)="removeTodo($event)" (editClicked)="editTodo($event)"/>
-        </mat-tab>
-      }
-    </mat-tab-group>
-  </div>
+  <h1>Todos</h1>
+  <mat-tab-group
+    mat-stretch-tabs="false"
+    mat-align-tabs="start"
+    (selectedIndexChange)="changeFilter($event)"
+  >
+    @for (list of vm.lists; track $index) {
+    <mat-tab [label]="list.label">
+      <app-edit-todo-list
+        [todos]="vm.todoPage!.items"
+        [emptyPlaceholder]="list.emptyPlaceholder"
+        [count]="list.count"
+        [pageIndex]="vm.todoPage!.pageIndex"
+        [pageSize]="vm.todoPage!.pageSize"
+        (pageChanged)="changePage($event)"
+        (completeClicked)="changeTodoStatus($event)"
+        (deleteClicked)="removeTodo($event)"
+        (editClicked)="editTodo($event)"
+      />
+    </mat-tab>
+    }
+  </mat-tab-group>
+</div>
 }

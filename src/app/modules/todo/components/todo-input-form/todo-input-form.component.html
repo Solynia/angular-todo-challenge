@@ -1,14 +1,14 @@
-  <div class="grid grid-cols-2 gap-4" [formGroup]="form">
-    <mat-form-field>
-      <mat-label>ToDo name</mat-label>
-      <input matInput placeholder="E.g. Send Email" formControlName="name">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Priority</mat-label>
-      <mat-select formControlName="priority">
-        @for (priority of priorities; track priority) {
-          <mat-option [value]="priority">{{ priority | titlecase }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-  </div>
+<div class="grid grid-cols-2 gap-4" [formGroup]="form">
+  <mat-form-field>
+    <mat-label>ToDo name</mat-label>
+    <input matInput placeholder="E.g. Send Email" formControlName="name" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Priority</mat-label>
+    <mat-select formControlName="priority">
+      @for (priority of priorities; track priority) {
+      <mat-option [value]="priority">{{ priority | titlecase }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>

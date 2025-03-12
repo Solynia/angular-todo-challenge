@@ -1,8 +1,16 @@
 <h1 mat-dialog-title>Edit ToDo</h1>
 <div mat-dialog-content>
-  <app-todo-input-form [formControl]="control"/>
+  <app-todo-input-form [formControl]="control" />
 </div>
 <div mat-dialog-actions align="end">
   <button mat-button id="cancelBtn" (click)="onCancel()">Cancel</button>
-  <button mat-button id="submitBtn" [disabled]="control.invalid" (click)="onSubmit()" cdkFocusInitial>Ok</button>
+  <button
+    mat-button
+    id="submitBtn"
+    [disabled]="control.invalid"
+    (click)="onSubmit()"
+    cdkFocusInitial
+  >
+    Ok
+  </button>
 </div>
