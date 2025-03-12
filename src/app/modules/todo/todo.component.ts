@@ -1,22 +1,18 @@
-import { AsyncPipe, TitleCasePipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatOption, MatSelect } from '@angular/material/select';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { createSelector, Store } from '@ngrx/store';
-import { Todo, TodoPriority, TodoStatus } from '../../services/todo.interface';
+import { Todo, TodoStatus } from '../../services/todo.interface';
 import { todoActions } from '../store/todo/todo.actions';
 import { getPaginatedTodos, getTodoCounts } from '../store/todo/todo.selectors';
 import { EditTodoListComponent } from './components/edit-todo-list/edit-todo-list.component';
+import {
+  TodoInputFormComponent,
+  TodoInputFormValue,
+} from './components/todo-input-form/todo-input-form.component';
 
 const indexToStatusConverter: Record<number, TodoStatus | undefined> = {
   0: undefined,
@@ -49,50 +45,39 @@ const getLists = createSelector(getTodoCounts, (counts) => {
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.css'],
   imports: [
-    MatFormField,
     MatCard,
     MatCardContent,
-    MatSelect,
-    MatOption,
-    MatLabel,
-    MatInput,
     ReactiveFormsModule,
     MatButton,
     MatTabGroup,
     MatTab,
     AsyncPipe,
-    TitleCasePipe,
     EditTodoListComponent,
+    TodoInputFormComponent,
   ],
 })
 export class TodoComponent implements OnInit {
   private readonly store = inject(Store);
-  readonly newTodo = new FormGroup({
-    name: new FormControl<string>('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    priority: new FormControl<TodoPriority | undefined>(undefined, {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-  });
   readonly todoPage$ = this.store.select(getPaginatedTodos);
-  readonly priorities = Object.values(TodoPriority);
   readonly lists$ = this.store.select(getLists);
+  readonly control = new FormControl<TodoInputFormValue>(
+    { name: '', priority: null },
+    { nonNullable: true }
+  );
 
   ngOnInit(): void {
     this.store.dispatch(todoActions.getToDoList());
   }
 
   addNewTodo() {
-    if (!this.newTodo.valid) return;
+    if (!this.control.valid) return;
     this.store.dispatch(
       todoActions.addToDoItem({
-        name: this.newTodo.value.name!,
-        priority: this.newTodo.value.priority!,
+        name: this.control.value.name!,
+        priority: this.control.value.priority!,
       })
     );
+    this.control.reset();
   }
 
   changeTodoStatus(todo: Todo) {

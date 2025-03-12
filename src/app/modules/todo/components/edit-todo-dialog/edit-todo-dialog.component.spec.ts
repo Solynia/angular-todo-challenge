@@ -39,16 +39,15 @@ describe('EditTodoDialogComponent', () => {
     const submitSpy = jest.spyOn(component, 'onSubmit');
     const compiled = fixture.nativeElement as HTMLElement;
     const button = compiled.querySelector<HTMLButtonElement>('#submitBtn')!;
-    const input = compiled.querySelector('input')!;
     const newName = `${todo.name} - edited`;
-    input.value = newName;
+    component.control.setValue({ name: newName, priority: TodoPriority.low });
 
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       button.click();
 
       expect(submitSpy).toHaveBeenCalled();
-      expect(component.form.value.name).toBe(newName);
+      expect(component.control.value.name).toBe(newName);
     });
   });
 
@@ -56,16 +55,15 @@ describe('EditTodoDialogComponent', () => {
     const submitSpy = jest.spyOn(component, 'onSubmit');
     const compiled = fixture.nativeElement as HTMLElement;
     const button = compiled.querySelector<HTMLButtonElement>('#submitBtn')!;
-    const input = compiled.querySelector('input')!;
     const newName = '';
-    input.value = newName;
+    component.control.setValue({ name: newName, priority: TodoPriority.low });
 
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       button.click();
 
       expect(submitSpy).not.toHaveBeenCalled();
-      expect(component.form.value.name).toBe(newName);
+      expect(component.control.value.name).toBe(newName);
     });
   });
 

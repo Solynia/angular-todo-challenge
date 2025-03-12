@@ -1,12 +1,6 @@
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -15,11 +9,11 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatOption, MatSelect } from '@angular/material/select';
 import { Todo } from '../../../../services/todo.interface';
-import { TodoPriority } from '../edit-todo-list/edit-todo-list.component';
+import {
+  TodoInputFormComponent,
+  TodoInputFormValue,
+} from '../todo-input-form/todo-input-form.component';
 
 export interface EditTodoDialogData {
   todo: Todo;
@@ -33,35 +27,23 @@ export interface EditTodoDialogData {
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
     ReactiveFormsModule,
     MatDialogActions,
     MatButton,
-    MatSelect,
-    MatOption,
-    TitleCasePipe,
+    TodoInputFormComponent,
   ],
 })
 export class EditTodoDialogComponent implements OnInit {
   private readonly dialogRef =
     inject<MatDialogRef<EditTodoDialogComponent, Todo>>(MatDialogRef);
   readonly data = inject<EditTodoDialogData>(MAT_DIALOG_DATA);
-  readonly priorities = Object.values(TodoPriority);
-  readonly form = new FormGroup({
-    name: new FormControl<string>('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-    priority: new FormControl<TodoPriority | undefined>(undefined, {
-      nonNullable: true,
-      validators: [Validators.required],
-    }),
-  });
+  readonly control = new FormControl<TodoInputFormValue>(
+    { name: '', priority: undefined },
+    { nonNullable: true }
+  );
 
   ngOnInit(): void {
-    this.form.setValue({
+    this.control.setValue({
       name: this.data.todo.name ?? '',
       priority: this.data.todo.priority,
     });
@@ -72,11 +54,11 @@ export class EditTodoDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (!this.form.valid) return;
+    if (!this.control.valid) return;
     this.dialogRef.close({
       ...this.data.todo,
-      name: this.form.value.name,
-      priority: this.form.value.priority,
+      name: this.control.value.name,
+      priority: this.control.value.priority ?? undefined,
     });
   }
 }

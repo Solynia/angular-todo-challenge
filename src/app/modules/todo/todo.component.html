@@ -3,20 +3,9 @@
     <h1>Create Todos</h1>
     <mat-card appearance="outlined" class="mb-4">
       <mat-card-content>
-        <div class="todo-list-form grid grid-cols-8 gap-4 mt-5" [formGroup]="newTodo">
-          <mat-form-field class="col-span-4">
-            <mat-label>Todo List Item</mat-label>
-            <input matInput placeholder="E.g. Send Email" formControlName="name">
-          </mat-form-field>
-          <mat-form-field class="col-span-2">
-            <mat-label>Priority</mat-label>
-            <mat-select formControlName="priority">
-              @for (priority of priorities; track priority) {
-                <mat-option [value]="priority">{{ priority | titlecase }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-          <button class="col-span-2" mat-raised-button color="primary" [disabled]="newTodo.invalid" (click)="addNewTodo()">Add Todo</button>
+        <div class="todo-list-form flex gap-4 mt-5">
+          <app-todo-input-form [formControl]="control"/>
+          <button class="col-span-2" mat-raised-button color="primary" [disabled]="control.invalid" (click)="addNewTodo()">Add Todo</button>
         </div>
       </mat-card-content>
     </mat-card>

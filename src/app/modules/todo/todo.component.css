@@ -2,12 +2,3 @@
   max-width: 500px;
   margin: 50px auto;
 }
-
-.todo-list-form .mat-form-field {
- width: 300px;
- margin-right: 20px;
-}
-
- .todo-list-form .mat-raised-button {
-  margin-left: 10px;
- }

@@ -28,9 +28,11 @@ describe('TodoComponent', () => {
   it('should submit the valid todo name', () => {
     const dispatchSpy = jest.spyOn(store, 'dispatch');
     const compiled = fixture.nativeElement as HTMLElement;
-    const input = compiled.querySelector('input')!;
     const button = compiled.querySelector('button')!;
-    input.value = 'My first todo';
+    component.control.setValue({
+      name: 'My first todo',
+      priority: TodoPriority.medium,
+    });
 
     fixture.detectChanges();
     fixture.whenStable().then(() => {
@@ -65,7 +67,7 @@ describe('TodoComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const button = compiled.querySelector('button')!;
 
-    component.newTodo.setValue({
+    component.control.setValue({
       name: 'My first todo',
       priority: TodoPriority.high,
     });
