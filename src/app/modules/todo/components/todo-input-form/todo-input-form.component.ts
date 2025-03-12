@@ -1,5 +1,10 @@
 import { TitleCasePipe } from '@angular/common';
-import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+} from '@angular/core';
 import {
   ControlValueAccessor,
   FormControl,
@@ -59,6 +64,7 @@ type OnTouchedFn = () => void;
   ],
   templateUrl: './todo-input-form.component.html',
   styleUrl: './todo-input-form.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoInputFormComponent
   implements ControlValueAccessor, Validator, AfterViewInit, OnDestroy

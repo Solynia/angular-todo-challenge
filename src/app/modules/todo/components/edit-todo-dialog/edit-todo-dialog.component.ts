@@ -1,5 +1,10 @@
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import {
@@ -32,6 +37,7 @@ export interface EditTodoDialogData {
     MatButton,
     TodoInputFormComponent,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditTodoDialogComponent implements OnInit {
   private readonly dialogRef =

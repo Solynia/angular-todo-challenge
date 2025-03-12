@@ -1,5 +1,10 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+} from '@angular/core';
 import { MatMiniFabButton } from '@angular/material/button';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatChip } from '@angular/material/chips';
@@ -40,6 +45,7 @@ const priorityToColorConverter = {
   ],
   templateUrl: './edit-todo-list.component.html',
   styleUrl: './edit-todo-list.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditTodoListComponent {
   readonly statusEnum = TodoStatus;
