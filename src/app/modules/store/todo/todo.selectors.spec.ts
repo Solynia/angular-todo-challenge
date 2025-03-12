@@ -1,4 +1,5 @@
-import { TodoPriority, TodoState, TodoStatus } from './todo.reducer';
+import { TodoPriority, TodoStatus } from '../../../services/todo.interface';
+import { TodoState } from './todo.reducer';
 import {
   getAllSortedTodos,
   getAllTodos,

@@ -1,12 +1,10 @@
-import { todoActions } from './todo.actions';
 import {
-  initialState,
   Todo,
-  todoFeature,
   TodoPriority,
-  TodoState,
   TodoStatus,
-} from './todo.reducer';
+} from '../../../services/todo.interface';
+import { todoActions } from './todo.actions';
+import { initialState, todoFeature, TodoState } from './todo.reducer';
 
 describe('TodoReducer', () => {
   describe('unknown action', () => {

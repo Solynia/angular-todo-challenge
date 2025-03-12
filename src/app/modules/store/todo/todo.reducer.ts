@@ -1,25 +1,8 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
+import { Todo, TodoStatus } from '../../../services/todo.interface';
 import { TODO_FEATURE_KEY, todoActions } from './todo.actions';
 
 export const PAGE_SIZE = 5;
-
-export enum TodoStatus {
-  Complete = 'COMPLETE',
-  InProgress = 'IN_PROGRESS',
-}
-
-export enum TodoPriority {
-  low = 'LOW',
-  medium = 'MEDIUM',
-  high = 'HIGH',
-}
-
-export interface Todo {
-  id: number;
-  name?: string;
-  status: TodoStatus;
-  priority?: TodoPriority;
-}
 
 export interface TodoState {
   todoList: Todo[];

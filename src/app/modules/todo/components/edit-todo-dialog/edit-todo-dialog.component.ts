@@ -18,7 +18,7 @@ import {
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
-import { Todo } from 'src/app/modules/store/todo/todo.reducer';
+import { Todo } from '../../../../services/todo.interface';
 import { TodoPriority } from '../edit-todo-list/edit-todo-list.component';
 
 export interface EditTodoDialogData {

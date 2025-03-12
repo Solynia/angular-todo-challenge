@@ -1,5 +1,9 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Todo, TodoPriority, TodoStatus } from './todo.reducer';
+import {
+  Todo,
+  TodoPriority,
+  TodoStatus,
+} from '../../../services/todo.interface';
 
 export const TODO_FEATURE_KEY = 'ToDo';
 

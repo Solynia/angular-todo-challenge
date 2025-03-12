@@ -13,8 +13,8 @@ import { MatInput } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { createSelector, Store } from '@ngrx/store';
+import { Todo, TodoPriority, TodoStatus } from '../../services/todo.interface';
 import { todoActions } from '../store/todo/todo.actions';
-import { Todo, TodoPriority, TodoStatus } from '../store/todo/todo.reducer';
 import { getPaginatedTodos, getTodoCounts } from '../store/todo/todo.selectors';
 import { EditTodoListComponent } from './components/edit-todo-list/edit-todo-list.component';
 

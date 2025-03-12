@@ -6,7 +6,7 @@ import { MatChip } from '@angular/material/chips';
 import { MatDivider } from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginator } from '@angular/material/paginator';
-import { Todo } from 'src/app/modules/store/todo/todo.reducer';
+import { Todo } from '../../../../services/todo.interface';
 
 export enum TodoStatus {
   Complete = 'COMPLETE',

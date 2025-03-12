@@ -1,10 +1,6 @@
 import { createSelector } from '@ngrx/store';
-import {
-  PAGE_SIZE,
-  todoFeature,
-  TodoPriority,
-  TodoStatus,
-} from './todo.reducer';
+import { TodoPriority, TodoStatus } from '../../../services/todo.interface';
+import { PAGE_SIZE, todoFeature } from './todo.reducer';
 
 export const {
   selectTodoList: getAllTodos,

@@ -3,13 +3,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, filter, map, switchMap } from 'rxjs/operators';
+import { Todo } from '../../../services/todo.interface';
 import {
   EditTodoDialogComponent,
   EditTodoDialogData,
 } from '../../todo/components/edit-todo-dialog/edit-todo-dialog.component';
 import { todoActions } from './todo.actions';
 import { todos } from './todo.const';
-import { Todo } from './todo.reducer';
 
 export const getToDoList$ = createEffect(
   (actions$ = inject(Actions)) =>

@@ -1,10 +1,8 @@
-import {
-  Todo,
-  TodoPriority,
-  TodoStatus,
-} from '../../../services/todo.interface';
+import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
+import { Todo, TodoPriority, TodoStatus } from './todo.interface';
 
-export const todos: Todo[] = [
+const todos: Todo[] = [
   {
     id: 1,
     name: 'My first todo',
@@ -48,3 +46,10 @@ export const todos: Todo[] = [
     priority: TodoPriority.medium,
   },
 ];
+
+@Injectable({ providedIn: 'root' })
+export class TodoService {
+  getAll() {
+    return of([]);
+  }
+}
