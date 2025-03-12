@@ -1,8 +1,27 @@
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
+import {
+  Todo,
+  TodoPriority,
+  TodoStatus,
+} from '../../../services/todo.interface';
 import { todoActions } from './todo.actions';
-import { todos } from './todo.const';
 import { getToDoList$, openEditToDoDialog$ } from './todo.effects';
+
+const todos: Todo[] = [
+  {
+    id: 1,
+    name: 'My first todo',
+    status: TodoStatus.Complete,
+    priority: TodoPriority.low,
+  },
+  {
+    id: 2,
+    name: 'My second todo',
+    status: TodoStatus.InProgress,
+    priority: TodoPriority.medium,
+  },
+];
 
 describe('ToDoEffects', () => {
   it('loads todos successfully', (done) => {
